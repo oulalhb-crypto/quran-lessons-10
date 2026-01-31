@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>فهرس الدروس</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+            background: #f4f6fb;
+            color: #333;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, #1e88e5, #1565c0);
+            color: white;
+            padding: 18px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: auto;
+            padding: 16px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 14px;
+            border: none;
+            outline: none;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            margin-bottom: 18px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            background: white;
+            margin-bottom: 14px;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        a {
+            display: block;
+            padding: 20px;
+            font-size: 17px;
+            text-decoration: none;
+            color: #1e88e5;
+            font-weight: 500;
+        }
+
+        a:active {
+            background: #e3f2fd;
+        }
+
+        mark {
+            background: #fff3cd;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #121212;
+                color: #e0e0e0;
+            }
+            li {
+                background: #1e1e1e;
+            }
+            a {
+                color: #90caf9;
+            }
+            mark {
+                background: #5c4b00;
+                color: #fff;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>📚 فهرس الدروس</header>
+
+<div class="container">
+
+    <div class="search-box">
+        <input type="search" placeholder="🔍 ابحث عن درس..." oninput="filterList()">
+    </div>
+
+    <ul id="pdfList">
+        <li><a href="pdf/البسملة لل10.pdf">📘 البسملة لل10</a></li>
+        <li><a href="pdf/المد والقصر لل10.pdf">📘 المد والقصر لل10</a></li>
+        <li><a href="pdf/ميم الجمع لل10.pdf">📘 ميم الجمع لل10</a></li>
+        <li><a href="pdf/التقاء الساكنين لل10.pdf">📘 التقاء الساكنين لل10</a></li>
+        <li><a href="pdf/لفظة هو وهي لل10.pdf">📘 لفظة هو وهي لل10</a></li>
+        <li><a href="pdf/لفظة أنا لل10.pdf">📘 لفظة أنا لل10</a></li>
+        <li><a href="pdf/الالفات السبع لل10.pdf">📘 الالفات السبع لل10</a></li>
+        <li><a href="pdf/هاء الكناية لل10.pdf">📘 هاء الكناية لل10</a></li>
+        <li><a href="pdf/هاء السكت لل10.pdf">📘 هاء السكت لل10</a></li>
+        <li><a href="pdf/الهمزتين من كلمة لل 10.pdf">📘 الهمزتين من كلمة لل10</a></li>
+        <li><a href="pdf/الهمزتين من كلمتين لل10.pdf">📘 الهمزتين من كلمتين لل10</a></li>
+        <li><a href="pdf/الكلمات الاستفهيامة لل10.pdf">📘 الكلمات الاستفهامية لل10</a></li>
+        <li><a href="pdf/الهمز المفرد لل10.pdf">📘 الهمز المفرد لل10</a></li>
+        <li><a href="pdf/الاستفهام المكرر لل10.pdf">📘 الاستفهام المكرر لل10</a></li>
+        <li><a href="pdf/الادغام الصغير لل10.pdf">📘 الادغام الصغير لل10</a></li>
+        <li><a href="pdf/الادغام الكبير لل10.pdf">📘 الادغام الكبير لل10</a></li>
+        <li><a href="pdf/الفتح والتقليل والامالة لل10.pdf">📘 الفتح والتقليل والامالة لل10</a></li>
+        <li><a href="pdf/ياء الاضافة لل10.pdf">📘 ياء الاضافة لل10</a></li>
+        <li><a href="pdf/ياء الزوائد لل10.pdf">📘 ياء الزوائد لل10</a></li>
+        <li><a href="pdf/الوقف على مرسوم الخط لل10.pdf">📘 الوقف على مرسوم الخط لل10</a></li>
+        <li><a href="pdf/أوجه التكبير لابن كثير.pdf">📘 أوجه التكبير لابن كثير</a></li>
+    </ul>
+
+</div>
+
+<script>
+    function filterList() {
+        const q = document.querySelector("input[type='search']").value.trim();
+        const items = document.querySelectorAll("#pdfList li");
+
+        items.forEach(li => {
+            const a = li.querySelector("a");
+            const text = a.textContent;
+            const href = a.getAttribute("href");
+
+            if (!q) {
+                li.style.display = "";
+                a.innerHTML = text;
+                return;
+            }
+
+            if (text.includes(q)) {
+                li.style.display = "";
+                a.innerHTML = text.replace(
+                    new RegExp(q, "g"),
+                    `<mark>${q}</mark>`
+                );
+                a.setAttribute("href", href);
+            } else {
+                li.style.display = "none";
+            }
+        });
+    }
+
+    window.addEventListener("beforeunload", () => {
+        sessionStorage.setItem("scrollY", window.scrollY);
+    });
+
+    window.addEventListener("load", () => {
+        const y = sessionStorage.getItem("scrollY");
+        if (y) window.scrollTo(0, y);
+    });
+</script>
+
+</body>
+</html>
