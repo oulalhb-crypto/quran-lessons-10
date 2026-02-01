@@ -1,221 +1,173 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>فهرس الدروس</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>فهرس الدروس</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body {
-    margin: 0;
-    font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-    background: #f4f6fb;
-    color: #333;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+            background: #f4f6fb;
+            color: #333;
+        }
 
-header {
-    position: sticky;
-    top: 0;
-    background: linear-gradient(135deg, #1e88e5, #1565c0);
-    color: white;
-    padding: 18px;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 600;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    z-index: 10;
-}
+        header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, #1e88e5, #1565c0);
+            color: white;
+            padding: 18px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
 
-.container {
-    max-width: 720px;
-    margin: auto;
-    padding: 16px;
-}
+        .container {
+            max-width: 720px;
+            margin: auto;
+            padding: 16px;
+        }
 
-.search-box input {
-    width: 100%;
-    padding: 15px;
-    font-size: 16px;
-    border-radius: 14px;
-    border: none;
-    outline: none;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    margin-bottom: 18px;
-}
+        .search-box input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 14px;
+            border: none;
+            outline: none;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            margin-bottom: 18px;
+        }
 
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-li {
-    background: white;
-    margin-bottom: 14px;
-    border-radius: 16px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    overflow: hidden;
-}
+        li {
+            background: white;
+            margin-bottom: 14px;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
 
-a {
-    display: block;
-    padding: 20px;
-    font-size: 17px;
-    text-decoration: none;
-    color: #1e88e5;
-    font-weight: 500;
-}
+        a {
+            display: block;
+            padding: 20px;
+            font-size: 17px;
+            text-decoration: none;
+            color: #1e88e5;
+            font-weight: 500;
+        }
 
-a:active {
-    background: #e3f2fd;
-}
+        a:active {
+            background: #e3f2fd;
+        }
 
-mark {
-    background: #fff3cd;
-    padding: 0 4px;
-    border-radius: 4px;
-}
+        mark {
+            background: #fff3cd;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
 
-#pdfViewer {
-    display: none;
-    height: 100vh;
-}
-
-#pdfViewer button {
-    padding: 12px;
-    margin: 10px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    background-color: #1e88e5;
-    color: white;
-    cursor: pointer;
-}
-
-#pdfViewer iframe {
-    width: 100%;
-    height: calc(100vh - 60px);
-    border: none;
-}
-
-@media (prefers-color-scheme: dark) {
-    body {
-        background: #121212;
-        color: #e0e0e0;
-    }
-    li {
-        background: #1e1e1e;
-    }
-    a {
-        color: #90caf9;
-    }
-    mark {
-        background: #5c4b00;
-        color: #fff;
-    }
-    #pdfViewer button {
-        background-color: #90caf9;
-        color: #121212;
-    }
-}
-</style>
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #121212;
+                color: #e0e0e0;
+            }
+            li {
+                background: #1e1e1e;
+            }
+            a {
+                color: #90caf9;
+            }
+            mark {
+                background: #5c4b00;
+                color: #fff;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<header>📚 فهرس الدروس</header>
+<header>📚 فهرس الدروس للقراء ال10</header>
 
-<div class="container" id="tocContainer">
+<div class="container">
 
     <div class="search-box">
         <input type="search" placeholder="🔍 ابحث عن درس..." oninput="filterList()">
     </div>
 
     <ul id="pdfList">
-        <li><a href="pdf/البسملة لل10.pdf" onclick="openPDF(event)">📘 البسملة لل10</a></li>
-        <li><a href="pdf/المد والقصر لل10.pdf" onclick="openPDF(event)">📘 المد والقصر لل10</a></li>
-        <li><a href="pdf/ميم الجمع لل10.pdf" onclick="openPDF(event)">📘 ميم الجمع لل10</a></li>
-        <li><a href="pdf/التقاء الساكنين لل10.pdf" onclick="openPDF(event)">📘 التقاء الساكنين لل10</a></li>
-        <li><a href="pdf/لفظة هو وهي لل10.pdf" onclick="openPDF(event)">📘 لفظة هو وهي لل10</a></li>
-        <li><a href="pdf/لفظة أنا لل10.pdf" onclick="openPDF(event)">📘 لفظة أنا لل10</a></li>
-        <li><a href="pdf/الالفات السبع لل10.pdf" onclick="openPDF(event)">📘 الالفات السبع لل10</a></li>
-        <li><a href="pdf/هاء الكناية لل10.pdf" onclick="openPDF(event)">📘 هاء الكناية لل10</a></li>
-        <li><a href="pdf/هاء السكت لل10.pdf" onclick="openPDF(event)">📘 هاء السكت لل10</a></li>
-        <li><a href="pdf/الهمزتين من كلمة لل 10.pdf" onclick="openPDF(event)">📘 الهمزتين من كلمة لل10</a></li>
-        <li><a href="pdf/الهمزتين من كلمتين لل10.pdf" onclick="openPDF(event)">📘 الهمزتين من كلمتين لل10</a></li>
-        <li><a href="pdf/الكلمات الاستفهيامة لل10.pdf" onclick="openPDF(event)">📘 الكلمات الاستفهامية لل10</a></li>
-        <li><a href="pdf/الهمز المفرد لل10.pdf" onclick="openPDF(event)">📘 الهمز المفرد لل10</a></li>
-        <li><a href="pdf/الاستفهام المكرر لل10.pdf" onclick="openPDF(event)">📘 الاستفهام المكرر لل10</a></li>
-        <li><a href="pdf/الادغام الصغير لل10.pdf" onclick="openPDF(event)">📘 الادغام الصغير لل10</a></li>
-        <li><a href="pdf/الادغام الكبير لل10.pdf" onclick="openPDF(event)">📘 الادغام الكبير لل10</a></li>
-        <li><a href="pdf/الفتح والتقليل والامالة لل10.pdf" onclick="openPDF(event)">📘 الفتح والتقليل والامالة لل10</a></li>
-        <li><a href="pdf/ياء الاضافة لل10.pdf" onclick="openPDF(event)">📘 ياء الاضافة لل10</a></li>
-        <li><a href="pdf/ياء الزوائد لل10.pdf" onclick="openPDF(event)">📘 ياء الزوائد لل10</a></li>
-        <li><a href="pdf/الوقف على مرسوم الخط لل10.pdf" onclick="openPDF(event)">📘 الوقف على مرسوم الخط لل10</a></li>
-        <li><a href="pdf/أوجه التكبير لابن كثير.pdf" onclick="openPDF(event)">📘 أوجه التكبير لابن كثير</a></li>
+        <li><a href="lessons/البسملة.html">📘 البسملة </a></li>
+        <li><a href="lessons/المد والقصر.html">📘 المد والقصر </a></li>
+        <li><a href="lessons/ميم الجمع.html">📘 ميم الجمع </a></li>
+        <li><a href="lessons/التقاء الساكنين.html">📘 التقاء الساكنين </a></li>
+        <li><a href="lessons/لفظة هو وهي.html">📘 لفظة هو وهي </a></li>
+        <li><a href="lessons/لفظة أنا.html">📘 لفظة أنا </a></li>
+        <li><a href="lessons/الالفات السبع.html">📘 الالفات السبع </a></li>
+        <li><a href="lessons/هاء الكناية.html">📘 هاء الكناية </a></li>
+        <li><a href="lessons/هاء السكت.html">📘 هاء السكت </a></li>
+        <li><a href="lessons/الهمزتين من كلمة.html">📘 الهمزتين من كلمة </a></li>
+        <li><a href="lessons/الهمزتين من كلمتين.html">📘 الهمزتين من كلمتين </a></li>
+        <li><a href="lessons/الكلمات الاستفهامية.html">📘 الكلمات الاستفهامية </a></li>
+        <li><a href="lessons/الهمز المفرد.html">📘 الهمز المفرد </a></li>
+        <li><a href="lessons/الاستفهام المكرر.html">📘 الاستفهام المكرر </a></li>
+        <li><a href="lessons/الادغام الصغير.html">📘 الادغام الصغير </a></li>
+        <li><a href="lessons/الادغام الكبير.html">📘 الادغام الكبير </a></li>
+        <li><a href="lessons/الفتح والتقليل والامالة.html">📘 الفتح والتقليل والامالة </a></li>
+        <li><a href="lessons/ياء الاضافة.html">📘 ياء الاضافة </a></li>
+        <li><a href="lessons/ياء الزوائد.html">📘 ياء الزوائد </a></li>
+        <li><a href="lessons/الوقف على مرسوم الخط.html">📘 الوقف على مرسوم الخط </a></li>
+        <li><a href="lessons/أوجه التكبير لابن كثير.html">📘 أوجه التكبير لابن كثير</a></li>
     </ul>
 
 </div>
 
-<div id="pdfViewer">
-    <button onclick="closePDF()">⬅ العودة للفهرس</button>
-    <iframe id="pdfFrame"></iframe>
-</div>
-
 <script>
-function filterList() {
-    const q = document.querySelector("input[type='search']").value.trim();
-    const items = document.querySelectorAll("#pdfList li");
+    function filterList() {
+        const q = document.querySelector("input[type='search']").value.trim();
+        const items = document.querySelectorAll("#pdfList li");
 
-    items.forEach(li => {
-        const a = li.querySelector("a");
-        const text = a.textContent;
-        const href = a.getAttribute("href");
+        items.forEach(li => {
+            const a = li.querySelector("a");
+            const text = a.textContent;
+            const href = a.getAttribute("href");
 
-        if (!q) {
-            li.style.display = "";
-            a.innerHTML = text;
-            return;
-        }
+            if (!q) {
+                li.style.display = "";
+                a.innerHTML = text;
+                return;
+            }
 
-        if (text.includes(q)) {
-            li.style.display = "";
-            a.innerHTML = text.replace(
-                new RegExp(q, "g"),
-                `<mark>${q}</mark>`
-            );
-            a.setAttribute("href", href);
-        } else {
-            li.style.display = "none";
-        }
+            if (text.includes(q)) {
+                li.style.display = "";
+                a.innerHTML = text.replace(
+                    new RegExp(q, "g"),
+                    `<mark>${q}</mark>`
+                );
+                a.setAttribute("href", href);
+            } else {
+                li.style.display = "none";
+            }
+        });
+    }
+
+    window.addEventListener("beforeunload", () => {
+        sessionStorage.setItem("scrollY", window.scrollY);
     });
-}
 
-function openPDF(e) {
-    e.preventDefault(); // prevent default link
-    const url = e.currentTarget.getAttribute('href');
-    document.getElementById('tocContainer').style.display = 'none';
-    const viewer = document.getElementById('pdfViewer');
-    viewer.style.display = 'block';
-    document.getElementById('pdfFrame').src = url;
-    window.scrollTo(0,0);
-}
-
-function closePDF() {
-    document.getElementById('pdfViewer').style.display = 'none';
-    document.getElementById('tocContainer').style.display = 'block';
-    window.scrollTo(0,0);
-}
-
-// Restore scroll position
-window.addEventListener("beforeunload", () => {
-    sessionStorage.setItem("scrollY", window.scrollY);
-});
-
-window.addEventListener("load", () => {
-    const y = sessionStorage.getItem("scrollY");
-    if (y) window.scrollTo(0, y);
-});
+    window.addEventListener("load", () => {
+        const y = sessionStorage.getItem("scrollY");
+        if (y) window.scrollTo(0, y);
+    });
 </script>
 
 </body>
