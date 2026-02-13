@@ -4,6 +4,23 @@
   href="resources/sheet.css"
 />
 <style type="text/css">
+  .ritz.grid-container {
+    overflow-x: auto; /* horizontal scroll */
+    overflow-y: auto; /* vertical scroll */
+    max-width: 100%;
+    max-height: 80vh; /* adjust height as needed */
+  }
+
+  .ritz .waffle tr:first-child td,
+  .ritz .waffle tr:nth-child(4) td {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+  .ritz .waffle {
+    width: max-content;
+  }
+
   .ritz .waffle a {
     color: inherit;
   }
