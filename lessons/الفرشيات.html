@@ -21,6 +21,7 @@
     box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
   }
   .back-btn {
+    display: inline-block;
     margin: 15px;
     padding: 8px 16px;
     font-size: 14px;
@@ -1324,7 +1325,7 @@
 </script>
 <button onclick="history.back()" class="back-btn">⬅ رجوع</button>
 
-<div class="search-container" style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; direction: rtl;">
+<div class="search-container" style="display: inline-block; align-items: center; gap: 10px; margin-bottom: 15px; direction: rtl;">
     <input type="text" id="searchInput" placeholder="ابحث في رقم الصفحة..." onkeyup="filterTable()" style="padding: 10px 15px; font-size: 16px; border: 2px solid #007BFF; border-radius: 8px; outline: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: all 0.2s ease;">
 </div>
   <div class="ritz grid-container" dir="rtl">
