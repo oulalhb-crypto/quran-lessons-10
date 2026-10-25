@@ -31,8 +31,41 @@
 
   <title>القراءات العشر</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- What shows until the app's first frame, or if it can't start. -->
+  <style>
+    :root { --paper: #F7F7F1; --ink: #173B35; --muted: #536C66; --gold: #C69C59; }
+    @media (prefers-color-scheme: dark) {
+      :root { --paper: #0D1C1A; --ink: #F1F6F0; --muted: #C1D1C9; --gold: #DAB577; }
+    }
+    html, body { margin: 0; height: 100%; background: var(--paper); }
+    #loading {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 16px;
+      padding: 0 24px; text-align: center; color: var(--ink);
+      font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+    }
+    #loading .spinner {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 3px solid rgba(198, 156, 89, .3);
+      border-top-color: var(--gold); animation: spin 1s linear infinite;
+    }
+    #loading .error, #loading.failed .spinner, #loading.failed .wait { display: none; }
+    #loading.failed .error { display: block; }
+    #loading small { display: block; color: var(--muted); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { #loading .spinner { animation-duration: 3s; } }
+  </style>
 </head>
 <body>
+  <div id="loading" role="status">
+    <div class="spinner" aria-hidden="true"></div>
+    <div class="wait">جارٍ تحميل القراءات العشر…<small lang="en" dir="ltr">Loading…</small></div>
+    <div class="error">
+      تعذّر تشغيل التطبيق في هذا المتصفح. حدّث الصفحة، أو حدّث المتصفح، أو جرّب متصفحًا آخر.
+      <small lang="en" dir="ltr">The app couldn't start in this browser. Reload, update your browser, or try another one.</small>
+    </div>
+  </div>
   <!--
     You can customize the "flutter_bootstrap.js" script.
     This is useful to provide a custom configuration to the Flutter loader
