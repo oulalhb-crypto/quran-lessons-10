@@ -1,43 +1,59 @@
 // Keeps the web app working offline once it has been opened online.
 //
-// Each build registers this worker as `sw.js?v=<build>`, so a release
-// installs a new worker with its own cache, filled with what this browser
-// actually uses (the build holds an engine for each kind of browser). Once
-// that is complete it takes over and drops the old cache: an open page keeps
-// running the release it loaded, and the next launch or reload gets the new
-// one whole.
+// Each build registers this worker as `sw.js?v=<build>&engine=<variant>`, so a
+// release installs a new worker with its own cache. The page passes the
+// engine directory its browser loads (the build holds one per kind of
+// browser), and the install caches everything a launch needs before the
+// worker takes over: an open page keeps running the release it loaded, and
+// the next launch or reload gets the new one whole, then the old cache goes.
 
-const VERSION = new URL(self.location).searchParams.get('v') || 'dev';
+const PARAMS = new URL(self.location).searchParams;
+const VERSION = PARAMS.get('v') || 'dev';
+const ENGINE = PARAMS.get('engine') === 'chromium' ? 'canvaskit/chromium/' : 'canvaskit/';
 const PREFIX = 'qiraat-';
 const CACHE = PREFIX + VERSION;
 
-// What every launch needs. The engine, fonts and icons are added as the page
-// uses them (see the 'cache' message below).
+// What every launch needs, besides the fonts listed in FontManifest.json.
 const CORE = [
   './',
   'flutter_bootstrap.js',
   'main.dart.js',
+  ENGINE + 'canvaskit.js',
+  ENGINE + 'canvaskit.wasm',
   'manifest.json',
   'favicon.png',
+  'icons/Icon-192.png',
+  'icons/Icon-512.png',
   'assets/AssetManifest.bin.json',
   'assets/FontManifest.json',
   'assets/assets/data/farshiyat.json',
 ];
 
 const scoped = (path) => new URL(path, self.registration.scope).href;
-const fresh = (url) => fetch(new Request(url, { cache: 'reload' }));
+
+// Checks with the server rather than trusting the browser's own cache, which
+// may still hold the last release's files; unchanged files cost a 304.
+const fresh = (url) => fetch(new Request(url, { cache: 'no-cache' }));
+
+async function fontUrls() {
+  const manifest = await (await fresh(scoped('assets/FontManifest.json'))).json();
+  return manifest.flatMap((family) =>
+    family.fonts.map((font) => scoped('assets/' + font.asset)),
+  );
+}
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open(CACHE);
-      await cache.addAll(CORE.map((path) => new Request(scoped(path), { cache: 'reload' })));
+      const urls = [...CORE.map(scoped), ...(await fontUrls())];
+      await cache.addAll(urls.map((url) => new Request(url, { cache: 'no-cache' })));
 
-      // Everything the last release had cached, fetched again from this
+      // Anything else the last release had cached, fetched again from this
       // release, so the update works offline as fully as the old one did. A
       // file this release no longer has is skipped; no network fails the
       // install, and the old release keeps working until the next try.
-      const core = new Set(CORE.map(scoped));
+      const core = new Set(urls);
       for (const name of await caches.keys()) {
         if (name === CACHE || !name.startsWith(PREFIX)) continue;
         const old = await caches.open(name);
@@ -63,8 +79,8 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// The page lists the files it loaded before this worker took over, such as
-// the engine, on the very first visit.
+// The page lists the files it loaded, in case it used one the install
+// didn't expect (say, a Flutter upgrade moved the engine).
 self.addEventListener('message', (event) => {
   if (event.data?.type !== 'cache') return;
   event.waitUntil(
