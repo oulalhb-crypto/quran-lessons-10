@@ -43,7 +43,7 @@ _flutter.buildConfig = {"engineRevision":"deb287481e3ce9468f3434937ced4240a70539
 
 // The engine loads from this site, not www.gstatic.com: ad blockers, some
 // networks and some countries block that domain, which left a blank page.
-// Flutter's service worker is deprecated, so none is registered.
+// Flutter's own service worker is deprecated; offline is sw.js (index.html).
 const loading = document.getElementById('loading');
 
 function showLoadError() {

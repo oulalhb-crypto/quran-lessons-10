@@ -75,5 +75,24 @@
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
   <script src="flutter_bootstrap.js" async></script>
+  <script>
+    // Offline: sw.js keeps a copy of the app once it has opened online. Only
+    // release builds have a version, so `flutter run` registers nothing.
+    const offlineVersion = "29983357" /* Flutter's service worker is deprecated and will be removed in a future Flutter release. */;
+    if ('serviceWorker' in navigator && offlineVersion) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js?v=' + offlineVersion);
+      });
+      // On the first visit the engine and fonts load before the worker is
+      // running; tell it what they were so it keeps them too.
+      window.addEventListener('flutter-first-frame', async () => {
+        const registration = await navigator.serviceWorker.ready;
+        registration.active?.postMessage({
+          type: 'cache',
+          urls: performance.getEntriesByType('resource').map((e) => e.name),
+        });
+      });
+    }
+  </script>
 </body>
 </html>
