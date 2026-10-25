@@ -78,7 +78,7 @@
   <script>
     // Offline: sw.js keeps a copy of the app once it has opened online. Only
     // release builds have a version, so `flutter run` registers nothing.
-    const offlineVersion = "545134484" /* Flutter's service worker is deprecated and will be removed in a future Flutter release. */;
+    const offlineVersion = "3224821693" /* Flutter's service worker is deprecated and will be removed in a future Flutter release. */;
     if ('serviceWorker' in navigator && offlineVersion) {
       // The engine this browser loads: Flutter's own test (flutter.js).
       const engine =
@@ -87,15 +87,20 @@
         typeof Intl.Segmenter !== 'undefined'
           ? 'chromium'
           : 'full';
-      window.addEventListener('load', () => {
-        navigator.serviceWorker
-          .register(`sw.js?v=${offlineVersion}&engine=${engine}`)
+      // Registered once the app is on screen: by then the browser has the
+      // engine, fonts and data, so the worker's copy mostly costs 304s, and
+      // `load` can come too late on a slow network (it waits for main.dart.js).
+      window.addEventListener('flutter-first-frame', async () => {
+        try {
+          await navigator.serviceWorker.register(
+            `sw.js?v=${offlineVersion}&engine=${engine}`,
+          );
+        } catch (_) {
           // Offline, the browser can't check for a new worker; the one it
           // has keeps serving.
-          .catch(() => {});
-      });
-      // Tell the worker what the page loaded, in case it missed something.
-      window.addEventListener('flutter-first-frame', async () => {
+          return;
+        }
+        // Tell the worker what the page loaded, in case it missed something.
         const registration = await navigator.serviceWorker.ready;
         registration.active?.postMessage({
           type: 'cache',
